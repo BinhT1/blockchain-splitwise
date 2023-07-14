@@ -20,3 +20,13 @@ $ npx hardhat node
 ```bash
 $ npx hardhat run --network localhost scripts/deploy.js
 ```
+
+3. Update the smart contract address and abi.
+
+- abi - artifacts/contracts/mycontract.sol/Splitwise.json
+- contract address - (From the command in the previous step)
+
+Update at
+`web_app/script.js`
+
+- variable: abi, contractAddress
