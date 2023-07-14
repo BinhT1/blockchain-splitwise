@@ -241,7 +241,7 @@ async function getLastActive(user) {
 
   for (let i = 0; i < result.length; i++) {
     const focusedItem = result[i];
-    if (focusedItem.from == user) {
+    if (focusedItem.from.toLowerCase() == user.toLowerCase()) {
       return new Date(focusedItem.t);
     }
   }
@@ -314,7 +314,7 @@ async function getAllFunctionCalls(addressOfContract, functionName) {
             return x.value;
           });
           function_calls.push({
-            from: txn.from,
+            from: func_call.params[0].value,
             args: args,
             t: timeBlock.timestamp,
           });
