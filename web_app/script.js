@@ -304,7 +304,7 @@ async function getAllFunctionCalls(addressOfContract, functionName) {
       if (txn.to == null) {
         continue;
       }
-      if (txn.to.toLowerCase() === addressOfContract.toLowerCase()) {
+      if (txn.to === addressOfContract) {
         var func_call = abiDecoder.decodeMethod(txn.data);
 
         // check that the function getting called in this txn is 'functionName'
@@ -314,7 +314,7 @@ async function getAllFunctionCalls(addressOfContract, functionName) {
             return x.value;
           });
           function_calls.push({
-            from: txn.from.toLowerCase(),
+            from: txn.from,
             args: args,
             t: timeBlock.timestamp,
           });
@@ -384,14 +384,12 @@ $("#myaccount").change(function () {
 // Allows switching between accounts in 'My Account' and the 'fast-copy' in 'Address of person you owe
 provider.listAccounts().then((response) => {
   var opts = response.map(function (a) {
-    return (
-      '<option value="' + a.toLowerCase() + '">' + a.toLowerCase() + "</option>"
-    );
+    return '<option value="' + a + '">' + a + "</option>";
   });
   $(".account").html(opts);
   $(".wallet_addresses").html(
     response.map(function (a) {
-      return "<li>" + a.toLowerCase() + "</li>";
+      return "<li>" + a + "</li>";
     })
   );
 });
