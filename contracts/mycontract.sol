@@ -13,6 +13,7 @@ contract Splitwise {
 
     // For Checking the participant.
     address[] public participantList;
+    mapping(address => bool) public participant;
 
     // FOr storing the owing data.
     mapping(address => Owing[]) owingData;
@@ -24,6 +25,14 @@ contract Splitwise {
 
     constructor() {
         owner = msg.sender;
+    }
+
+    function setParticipant(address input) private {
+        if (participant[input]) {
+            return;
+        }
+        participant[input] = true;
+        participantList.push(input);
     }
 
     function getParticipant() public view returns (address[] memory) {
@@ -52,6 +61,8 @@ contract Splitwise {
 
     function iou(address iAddress, address uAddress, uint32 amount) public {
         require(iAddress != uAddress, "You can't owe yourself!");
+        setParticipant(iAddress);
+        setParticipant(uAddress);
 
         // Check if they owe us first. If yes, then reduce the amount - cancel the owing process.
         for (uint i = 0; i < owingData[uAddress].length; i++) {
