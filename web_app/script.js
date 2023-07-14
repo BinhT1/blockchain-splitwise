@@ -175,8 +175,7 @@ var BlockchainSplitwise = new ethers.Contract(
 //                            Functions To Implement
 // =============================================================================
 
-// TODO: Add any helper functions here!
-
+// Add any helper functions here!
 async function owingDataAdapter(user) {
   const result = await BlockchainSplitwise.getAllOwingData(user);
 
@@ -210,14 +209,14 @@ async function findTheLestAmount(path) {
   return amount;
 }
 
-// TODO: Return a list of all users (creditors or debtors) in the system
+// Return a list of all users (creditors or debtors) in the system
 // All users in the system are everyone who has ever sent or received an IOU
 async function getUsers() {
   const participantResult = await BlockchainSplitwise.getParticipant();
   return participantResult;
 }
 
-// TODO: Get the total amount owed by the user specified by 'user'
+// Get the total amount owed by the user specified by 'user'
 async function getTotalOwed(user) {
   const result = await BlockchainSplitwise.getAllOwingData(user);
 
@@ -234,7 +233,7 @@ async function getTotalOwed(user) {
   return totalOwed;
 }
 
-// TODO: Get the last time this user has sent or received an IOU, in seconds since Jan. 1, 1970
+// Get the last time this user has sent or received an IOU, in seconds since Jan. 1, 1970
 // Return null if you can't find any activity for the user.
 // HINT: Try looking at the way 'getAllFunctionCalls' is written. You can modify it if you'd like.
 async function getLastActive(user) {
@@ -249,7 +248,7 @@ async function getLastActive(user) {
   return new Date(0);
 }
 
-// TODO: add an IOU ('I owe you') to the system
+// add an IOU ('I owe you') to the system
 // The person you owe money is passed as 'creditor'
 // The amount you owe them is passed as 'amount'
 async function add_IOU(creditor, amount) {
@@ -332,10 +331,11 @@ async function getAllFunctionCalls(addressOfContract, functionName) {
 // You just need to pass in a function ('getNeighbors') that takes a node (string) and returns its neighbors (as an array)
 async function doBFS(start, end, getNeighbors) {
   var queue = [[start]];
+  let isFirstRound = true;
   while (queue.length > 0) {
     var cur = queue.shift();
     var lastNode = cur[cur.length - 1];
-    if (lastNode.toLowerCase() === end.toString().toLowerCase()) {
+    if (lastNode === end.toString() && !isFirstRound) {
       return cur;
     } else {
       var neighbors = await getNeighbors(lastNode);
@@ -343,6 +343,7 @@ async function doBFS(start, end, getNeighbors) {
         queue.push(cur.concat([neighbors[i]]));
       }
     }
+    isFirstRound = false;
   }
   return null;
 }
