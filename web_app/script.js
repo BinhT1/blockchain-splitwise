@@ -318,6 +318,11 @@ async function getAllFunctionCalls(addressOfContract, functionName) {
             args: args,
             t: timeBlock.timestamp,
           });
+          function_calls.push({
+            from: func_call.params[1].value,
+            args: args,
+            t: timeBlock.timestamp,
+          });
         }
       }
     }
